@@ -1,6 +1,6 @@
 [project]
 name = "pdf-compression"
-version = "0.0.1"
+version = "0.0.2"
 description = "simple app to compress images in pdfs using pyvips and pymupdf"
 readme = "README.md"
 requires-python = ">=3.12"

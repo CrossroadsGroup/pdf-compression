@@ -14,7 +14,7 @@ if errorlevel 1 (
 
 echo.
 echo Building executable with PyInstaller...
-uv run pyinstaller --onefile --windowed --name="PDF_Compressor" --icon=NONE ^
+uv run pyinstaller --onedir --windowed --name="PDF_Compressor" --icon=NONE ^
     --collect-binaries=pyvips ^
     --hidden-import=pyvips ^
     --hidden-import=PIL ^
@@ -33,9 +33,10 @@ echo ========================================
 echo Build complete!
 echo ========================================
 echo.
-echo The executable is located in: dist\PDF_Compressor.exe
+echo The application is located in: dist\PDF_Compressor\
+echo Main executable: dist\PDF_Compressor\PDF_Compressor.exe
 echo.
-echo You can now distribute this .exe file to your team.
+echo Distribute the entire PDF_Compressor folder to your team.
 echo No Python installation required on their machines!
 echo.
 pause

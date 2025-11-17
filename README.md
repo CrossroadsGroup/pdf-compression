@@ -22,8 +22,8 @@ The pre-built executable is included in this repository at releases.
 
 ### How to Use
 
-1. **Run** `PDF_Compressor.exe` from the repository folder (or copy it anywhere on your computer)
-2. **Double-click** to open the application
+1. **Locate** the `PDF_Compressor` folder from the distribution
+2. **Double-click** `PDF_Compressor.exe` inside the folder to open the application
 3. **Click "Browse..."** to select the folder containing your PDFs
 4. **Adjust settings** (optional):
    - Image Quality: 50-100 (default: 90)
@@ -77,13 +77,8 @@ For safety, the tool prevents processing files in:
 **SHA256 Hash:**
 
 ```
-80f747cfcd0b293352a4d8f3e7b554a9e4501da56c0de65b3cae44634e270ff2
-```
+dad6164f8dcdf02fad6ad7a30c9b6a79a34fa00c543f8473424ba0700771d011
 
-**MD5 Hash:**
-
-```
-4a63878c5d2295b85753d6fe79c86758
 ```
 
 **Note:** Hash values change with each rebuild. Check the latest release for current hashes.
@@ -106,6 +101,7 @@ For safety, the tool prevents processing files in:
 
 - Make sure you're running on Windows 10 or later
 - Try running as Administrator (right-click → Run as administrator)
+- Keep all files in the PDF_Compressor folder together - the .exe needs the supporting files
 
 **Compression seems slow**
 
@@ -142,7 +138,9 @@ Note: All dependencies including libvips binaries are automatically installed vi
    ./build.sh
    ```
 
-3. The executable will be created in `dist/PDF_Compressor.exe` (Windows) or `dist/PDF_Compressor` (macOS/Linux)
+3. The application will be created in `dist/PDF_Compressor/` folder
+   - Windows: Run `dist/PDF_Compressor/PDF_Compressor.exe`
+   - macOS/Linux: Run `dist/PDF_Compressor/PDF_Compressor`
 
 ### Manual Build Steps
 
@@ -151,24 +149,32 @@ If you prefer to build manually:
 ```bash
 uv sync
 
-uv run pyinstaller --onefile --windowed --name="PDF_Compressor" \
-    --add-data="pdf_compress.py:." \
+uv run pyinstaller --onedir --windowed --name="PDF_Compressor" \
     --collect-binaries=pyvips \
     --hidden-import=pyvips \
     --hidden-import=PIL \
     --hidden-import=fitz \
-    app.py
+    --paths=src \
+    src/main.py
 ```
 
-Note: On Windows, use `;` instead of `:` in `--add-data` parameter.
+**Why `--onedir` instead of `--onefile`?**
+
+- `--onedir` creates a folder with the .exe and all dependencies
+- Avoids Windows security issues with temp file extraction
+- More reliable in corporate environments with antivirus/security software
+- Prevents "Failed to load Python DLL" errors
 
 ### Distribution
 
 After building:
 
-1. The .exe is in `dist/PDF_Compressor.exe`
-2. This file is completely standalone - no dependencies needed
-3. Distribute this single .exe file to team members
+1. The application is in the `dist/PDF_Compressor/` folder
+2. Distribute the **entire folder** to team members (as a .zip file)
+3. Team members should:
+   - Extract the entire folder
+   - Keep all files together in the same folder
+   - Run `PDF_Compressor.exe` from inside the folder
 4. Team members do NOT need Python installed
 
 ### File Structure
