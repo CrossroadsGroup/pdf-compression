@@ -1,7 +1,7 @@
 #!/bin/bash
 # Generate file hashes for the PDF Compressor executable
 
-EXE_PATH="dist/PDF_Compressor.exe"
+EXE_PATH="dist/PDF_Compressor/PDF_Compressor.exe"
 
 if [ ! -f "$EXE_PATH" ]; then
     echo "Error: $EXE_PATH not found"

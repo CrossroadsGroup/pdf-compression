@@ -16,7 +16,7 @@ echo ""
 echo "Building executable with PyInstaller..."
 
 # For Mac, we use .app bundle instead of .exe
-uv run pyinstaller --onefile --windowed --name="PDF_Compressor" \
+uv run pyinstaller --onedir --windowed --name="PDF_Compressor" \
     --collect-binaries=pyvips \
     --hidden-import=pyvips \
     --hidden-import=PIL \
@@ -34,7 +34,10 @@ echo "========================================"
 echo "Build complete!"
 echo "========================================"
 echo ""
-echo "The executable is located in: dist/PDF_Compressor"
+echo "The application is located in: dist/PDF_Compressor/"
+echo "Main executable: dist/PDF_Compressor/PDF_Compressor"
+echo ""
+echo "Distribute the entire PDF_Compressor folder."
 echo ""
 echo "Note: This builds a Mac app. For Windows .exe,"
 echo "you need to run build.bat on a Windows machine."

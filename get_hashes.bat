@@ -1,7 +1,7 @@
 @echo off
 REM Generate file hashes for the PDF Compressor executable
 
-set EXE_PATH=dist\PDF_Compressor.exe
+set EXE_PATH=dist\PDF_Compressor\PDF_Compressor.exe
 
 if not exist "%EXE_PATH%" (
     echo Error: %EXE_PATH% not found
