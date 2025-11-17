@@ -1,0 +1,13 @@
+[project]
+name = "pdf-compression"
+version = "0.0.1"
+description = "simple app to compress images in pdfs using pyvips and pymupdf"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+"pymupdf>=1.24.0",
+"pillow>=10.0.0",
+"pyvips>=2.2.3",
+"pyvips-binary>=2.2.3",
+"pyinstaller>=6.0.0"
+]
