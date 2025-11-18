@@ -74,7 +74,7 @@ def _optimize_image_with_pyvips(
     if needs_resize:
         hscale = target_width / original_width
         vscale = target_height / original_height
-        img = img.resize(hscale, vscale=vscale, kernel="lanczos3")
+        img = img.resize(hscale, vscale=vscale, kernel="lanczos3")  # type:ignore
 
     save_format = image_ext
     should_convert_png = (
@@ -89,9 +89,9 @@ def _optimize_image_with_pyvips(
         save_format = "jpeg"
 
     if save_format == "jpeg" or save_format == "jpg":
-        if img.interpretation != "srgb" and img.interpretation != "b-w":
-            img = img.colourspace("srgb")
-        return img.write_to_buffer(
+        if img.interpretation != "srgb" and img.interpretation != "b-w":  # type:ignore
+            img = img.colourspace("srgb")  # type:ignore
+        return img.write_to_buffer(  # type:ignore
             ".jpg",
             Q=image_quality,
             optimize_coding=False,
@@ -100,9 +100,9 @@ def _optimize_image_with_pyvips(
             subsample_mode="off",
         )
     elif save_format == "png":
-        return img.write_to_buffer(".png", compression=6)
+        return img.write_to_buffer(".png", compression=6)  # type:ignore
     else:
-        return img.write_to_buffer(f".{save_format}")
+        return img.write_to_buffer(f".{save_format}")  # type:ignore
 
 
 def _optimize_image_with_pil(

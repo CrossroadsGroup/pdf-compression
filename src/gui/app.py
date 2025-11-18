@@ -29,7 +29,7 @@ class GUILogHandler(logging.Handler):
 logging.basicConfig(
     level=logging.INFO,
     format="%(levelname)s: %(message)s",
-    handlers=[logging.StreamHandler()]
+    handlers=[logging.StreamHandler()],
 )
 
 
@@ -50,7 +50,7 @@ class PDFCompressorApp:
 
     def setup_ui(self):
         main_frame = ttk.Frame(self.root, padding="20")
-        main_frame.grid(row=0, column=0, sticky=(tk.W, tk.E, tk.N, tk.S))
+        main_frame.grid(row=0, column=0, sticky=(tk.W, tk.E, tk.N, tk.S))  # type:ignore
 
         self.root.columnconfigure(0, weight=1)
         self.root.rowconfigure(0, weight=1)
@@ -64,14 +64,21 @@ class PDFCompressorApp:
 
         folder_frame = ttk.LabelFrame(main_frame, text="Folder Selection", padding="10")
         folder_frame.grid(
-            row=1, column=0, columnspan=2, sticky=(tk.W, tk.E), pady=(0, 15)
+            row=1,
+            column=0,
+            columnspan=2,
+            sticky=(tk.W, tk.E),  # type:ignore
+            pady=(0, 15),  # type:ignore
         )
 
         ttk.Label(folder_frame, text="Select folder:").grid(
             row=0, column=0, sticky=tk.W
         )
         ttk.Entry(folder_frame, textvariable=self.folder_path, width=50).grid(
-            row=1, column=0, sticky=(tk.W, tk.E), padx=(0, 10)
+            row=1,
+            column=0,
+            sticky=(tk.W, tk.E),  # type:ignore
+            padx=(0, 10),  # type:ignore
         )
         ttk.Button(folder_frame, text="Browse...", command=self.browse_folder).grid(
             row=1, column=1
@@ -88,14 +95,18 @@ class PDFCompressorApp:
             main_frame, text="Compression Settings", padding="10"
         )
         settings_frame.grid(
-            row=2, column=0, columnspan=2, sticky=(tk.W, tk.E), pady=(0, 15)
+            row=2,
+            column=0,
+            columnspan=2,
+            sticky=(tk.W, tk.E),  # type:ignore
+            pady=(0, 15),  # type:ignore
         )
 
         ttk.Label(settings_frame, text="Image Quality (50-100):").grid(
             row=0, column=0, sticky=tk.W, pady=(0, 5)
         )
         quality_frame = ttk.Frame(settings_frame)
-        quality_frame.grid(row=1, column=0, sticky=(tk.W, tk.E), pady=(0, 10))
+        quality_frame.grid(row=1, column=0, sticky=(tk.W, tk.E), pady=(0, 10))  # type:ignore
 
         ttk.Scale(
             quality_frame,
@@ -105,7 +116,7 @@ class PDFCompressorApp:
             orient=tk.HORIZONTAL,
             length=300,
             command=lambda v: self.image_quality.set(int(float(v) // 2 * 2)),
-        ).grid(row=0, column=0, sticky=(tk.W, tk.E))
+        ).grid(row=0, column=0, sticky=(tk.W, tk.E))  # type:ignore
         ttk.Label(quality_frame, textvariable=self.image_quality, width=4).grid(
             row=0, column=1, padx=(10, 0)
         )
@@ -121,7 +132,7 @@ class PDFCompressorApp:
             row=3, column=0, sticky=tk.W, pady=(0, 5)
         )
         dpi_frame = ttk.Frame(settings_frame)
-        dpi_frame.grid(row=4, column=0, sticky=(tk.W, tk.E), pady=(0, 10))
+        dpi_frame.grid(row=4, column=0, sticky=(tk.W, tk.E), pady=(0, 10))  # type:ignore
 
         ttk.Scale(
             dpi_frame,
@@ -131,7 +142,7 @@ class PDFCompressorApp:
             orient=tk.HORIZONTAL,
             length=300,
             command=lambda v: self.max_dpi.set(int(float(v) // 10 * 10)),
-        ).grid(row=0, column=0, sticky=(tk.W, tk.E))
+        ).grid(row=0, column=0, sticky=(tk.W, tk.E))  # type:ignore
         ttk.Label(dpi_frame, textvariable=self.max_dpi, width=4).grid(
             row=0, column=1, padx=(10, 0)
         )
@@ -164,7 +175,10 @@ class PDFCompressorApp:
 
         progress_frame = ttk.LabelFrame(main_frame, text="Progress", padding="10")
         progress_frame.grid(
-            row=4, column=0, columnspan=2, sticky=(tk.W, tk.E, tk.N, tk.S)
+            row=4,
+            column=0,
+            columnspan=2,
+            sticky=(tk.W, tk.E, tk.N, tk.S),  # type:ignore
         )
         progress_frame.columnconfigure(0, weight=1)
         progress_frame.rowconfigure(1, weight=1)
@@ -172,7 +186,7 @@ class PDFCompressorApp:
         self.progress_bar = ttk.Progressbar(
             progress_frame, mode="determinate", length=640
         )
-        self.progress_bar.grid(row=0, column=0, sticky=(tk.W, tk.E), pady=(0, 10))
+        self.progress_bar.grid(row=0, column=0, sticky=(tk.W, tk.E), pady=(0, 10))  # type:ignore
 
         self.status_text = tk.Text(
             progress_frame,
@@ -182,12 +196,12 @@ class PDFCompressorApp:
             font=("Consolas", 10),
             wrap=tk.WORD,
         )
-        self.status_text.grid(row=1, column=0, sticky=(tk.W, tk.E, tk.N, tk.S))
+        self.status_text.grid(row=1, column=0, sticky=(tk.W, tk.E, tk.N, tk.S))  # type:ignore
 
         scrollbar = ttk.Scrollbar(
             progress_frame, orient=tk.VERTICAL, command=self.status_text.yview
         )
-        scrollbar.grid(row=1, column=1, sticky=(tk.N, tk.S))
+        scrollbar.grid(row=1, column=1, sticky=(tk.N, tk.S))  # type:ignore
         self.status_text.configure(yscrollcommand=scrollbar.set)
 
     def browse_folder(self):
@@ -256,7 +270,11 @@ class PDFCompressorApp:
 
             try:
                 import pyvips
-                self.log(f"✓ Using pyvips {pyvips.__version__} for fast image processing", "green")
+
+                self.log(
+                    f"✓ Using pyvips {pyvips.__version__} for fast image processing",
+                    "green",
+                )
             except Exception as e:
                 self.log(f"✗ pyvips not available: {e}", "red")
 
@@ -401,7 +419,7 @@ class PDFCompressorApp:
 
 def main():
     root = tk.Tk()
-    app = PDFCompressorApp(root)
+    PDFCompressorApp(root)
     root.mainloop()
 
 

@@ -10,4 +10,5 @@ if str(src_dir.parent) not in sys.path:
 
 if __name__ == "__main__":
     from src.gui.app import main
+
     main()
