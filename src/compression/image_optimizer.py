@@ -27,7 +27,7 @@ class ImageOptimizationResult:
     optimized_size: int
 
 
-def _has_transparency(image: Image.Image, smask_present: bool) -> bool:
+def has_transparency(image: Image.Image, smask_present: bool) -> bool:
     if smask_present:
         return True
 
@@ -160,7 +160,7 @@ def _optimize_image_with_pil(
     with Image.open(image_stream) as pil_image:
         pil_image.load()
 
-        has_alpha = _has_transparency(pil_image, smask_present=bool(smask))
+        has_alpha = has_transparency(pil_image, smask_present=bool(smask))
 
         if needs_resize:
             pil_image = pil_image.resize(
@@ -279,7 +279,7 @@ def optimize_image(
             image_stream = io.BytesIO(image_bytes)
             with Image.open(image_stream) as pil_image:
                 pil_image.load()
-                has_alpha = _has_transparency(pil_image, smask_present=bool(smask))
+                has_alpha = has_transparency(pil_image, smask_present=bool(smask))
 
         optimized_bytes = _optimize_image_with_pyvips(
             image_bytes,

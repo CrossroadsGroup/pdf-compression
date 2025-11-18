@@ -5,14 +5,14 @@ from __future__ import annotations
 import io
 import math
 from pathlib import Path
-from typing import Any, Iterable, cast
+from typing import Iterable, cast
 
 import fitz
 
 from .image_optimizer import ImageOptimizationResult, optimize_image
 
 
-def _compute_target_dimensions(
+def compute_target_dimensions(
     page: fitz.Page,
     image_info: tuple,
     original_width: int,
@@ -94,7 +94,7 @@ def _compress_document(
                 convert_large_pngs_to_jpeg,
                 png_to_jpeg_threshold,
                 optimization_cache,
-                _compute_target_dimensions,
+                compute_target_dimensions,
             )
         except Exception:
             continue
@@ -154,9 +154,7 @@ def compress_pdf(
             f.write(compressed_bytes)
     """
     if fitz is None:
-        raise RuntimeError(
-            "PDF compression dependencies (pymupdf) are not installed"
-        )
+        raise RuntimeError("PDF compression dependencies (pymupdf) are not installed")
 
     with fitz.open(stream=pdf_bytes, filetype="pdf") as doc:
         _compress_document(

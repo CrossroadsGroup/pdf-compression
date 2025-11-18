@@ -189,7 +189,13 @@ pdf-compression/
 │   └── compression/
 │       ├── pdf_processor.py       # PDF compression functions
 │       └── image_optimizer.py     # Image optimization (pyvips/PIL)
+├── tests/
+│   ├── test_path_validator.py     # Path validation tests (Windows/Mac)
+│   ├── test_pdf_processor.py      # PDF compression tests
+│   ├── test_image_optimizer.py    # Image optimization tests
+│   └── conftest.py                # Pytest configuration
 ├── pyproject.toml                 # Python project configuration
+├── pytest.ini                     # Pytest configuration
 ├── uv.lock                        # Locked dependencies
 ├── build.bat                      # Windows build script
 ├── build.sh                       # macOS/Linux build script
@@ -234,6 +240,53 @@ To rebuild after making changes:
    ```
 4. Update the README with the new hashes (if needed for IT approval)
 5. Distribute the new executable to team members
+
+### Running Tests
+
+The project includes comprehensive tests for path validation, PDF compression, and image optimization.
+
+**Install test dependencies:**
+
+```bash
+uv sync --extra dev
+```
+
+**Run all tests:**
+
+```bash
+uv run pytest
+```
+
+**Run specific test files:**
+
+```bash
+uv run pytest tests/test_path_validator.py
+uv run pytest tests/test_pdf_processor.py
+uv run pytest tests/test_image_optimizer.py
+```
+
+**Run tests with coverage:**
+
+```bash
+uv run pytest --cov=src --cov-report=term-missing
+```
+
+**Platform-Specific Tests:**
+
+The path validation tests are platform-specific and will automatically skip tests for other platforms:
+
+- **On Mac/Linux**: Windows tests are skipped, Unix tests run
+- **On Windows**: Unix tests are skipped, Windows tests run
+
+```bash
+# On Mac - Windows tests will be skipped
+uv run pytest tests/test_path_validator.py::TestPathValidatorWindows -v
+
+# On Windows - Mac/Linux tests will be skipped
+uv run pytest tests/test_path_validator.py::TestPathValidatorMacLinux -v
+```
+
+This ensures tests run with real platform-specific path behavior, making them more reliable.
 
 ### Known Limitations
 
