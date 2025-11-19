@@ -142,6 +142,19 @@ Note: All dependencies including libvips binaries are automatically installed vi
    - Windows: Run `dist/PDF_Compressor/PDF_Compressor.exe`
    - macOS/Linux: Run `dist/PDF_Compressor/PDF_Compressor`
 
+### Building the Windows Installer (Recommended)
+
+1. Install [Inno Setup](https://jrsoftware.org/isdl.php) (free, Windows only)
+2. Run the installer build script:
+
+   ```bash
+   .\build_installer.bat
+   ```
+
+3. The installer will be created: `dist/installer/PDF_Compressor_Setup.exe`
+
+**Note:** The installer is unsigned (no code signing certificate). Users will see a SmartScreen warning - this is normal for open source apps. Just click "More info" → "Run anyway".
+
 ### Manual Build Steps
 
 If you prefer to build manually:
@@ -199,6 +212,9 @@ pdf-compression/
 ├── uv.lock                        # Locked dependencies
 ├── build.bat                      # Windows build script
 ├── build.sh                       # macOS/Linux build script
+├── build_installer.bat            # Build Windows installer
+├── build_installer.sh             # Installer build info (Mac/Linux)
+├── installer.iss                  # Inno Setup installer script
 ├── get_hashes.bat                 # Generate file hashes (Windows)
 ├── get_hashes.sh                  # Generate file hashes (macOS/Linux)
 ├── .gitignore                     # Git ignore rules
