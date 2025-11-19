@@ -5,11 +5,14 @@ Compress PDFs in a local folder before uploading to file sharing platforms
 
 import logging
 import os
+import sys
 import threading
 import time
 import tkinter as tk
 from pathlib import Path
 from tkinter import filedialog, messagebox, ttk
+
+from PIL import Image, ImageTk
 
 from ..compression import compress_pdf_file
 from .path_validator import is_path_restricted
@@ -40,6 +43,8 @@ class PDFCompressorApp:
         self.root.geometry("800x750")
         self.root.resizable(True, True)
 
+        self.set_window_icon()
+
         self.folder_path = tk.StringVar()
         self.image_quality = tk.IntVar(value=90)
         self.max_dpi = tk.IntVar(value=250)
@@ -47,6 +52,23 @@ class PDFCompressorApp:
         self.cancel_requested = False
 
         self.setup_ui()
+
+    def set_window_icon(self):
+        try:
+            if getattr(sys, 'frozen', False):
+                base_path = Path(sys._MEIPASS)
+            else:
+                base_path = Path(__file__).parent.parent.parent
+
+            icon_path = base_path / "assets" / "icon.png"
+
+            if icon_path.exists():
+                icon_image = Image.open(icon_path)
+                icon_photo = ImageTk.PhotoImage(icon_image)
+                self.root.iconphoto(True, icon_photo)
+                self.icon_photo = icon_photo
+        except Exception:
+            pass
 
     def setup_ui(self):
         main_frame = ttk.Frame(self.root, padding="20")

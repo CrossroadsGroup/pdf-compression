@@ -14,7 +14,8 @@ if errorlevel 1 (
 
 echo.
 echo Building executable with PyInstaller...
-uv run pyinstaller --onedir --windowed --name="PDF_Compressor" --icon=NONE ^
+uv run pyinstaller --onedir --windowed --name="PDF_Compressor" --icon=assets/icon.ico ^
+    --add-data="assets;assets" ^
     --collect-binaries=pyvips ^
     --hidden-import=pyvips ^
     --hidden-import=PIL ^

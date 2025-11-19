@@ -16,7 +16,9 @@ echo ""
 echo "Building executable with PyInstaller..."
 
 # For Mac, we use .app bundle instead of .exe
-uv run pyinstaller --onedir --windowed --name="PDF_Compressor" \
+# Note: .ico files work on Mac too (PyInstaller converts them)
+uv run pyinstaller --onedir --windowed --name="PDF_Compressor" --icon=assets/icon.ico \
+    --add-data="assets:assets" \
     --collect-binaries=pyvips \
     --hidden-import=pyvips \
     --hidden-import=PIL \
